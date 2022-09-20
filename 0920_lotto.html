@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto_pjt</title>
+    <style>
+        .ball {
+            width: 5rem;
+            height: 5rem;
+            margin: .5rem;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 5rem;
+            font-size: xx-large;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .view_{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="view_">
+        <h1>로또 번호 생성</h1>
+        <button id = "lotto_btn">행운의 버튼</button>
+        <button id = 'new_btn'>새로고침</button>
+    </div>
+    <div class="view_" id="box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script>
+        const button = document.querySelector('#lotto_btn')
+        button.addEventListener('click', function(){
+            for (let i = 0; i < 5; i++){
+            // 컨테이너
+            const container = document.createElement('div')
+            container.classList.add('b_container')
+            // 번호생성
+            const numbers = _.sampleSize(_.range(1,46), 6).sort((a, b)=> a - b)
+            // 볼 생성
+            
+                for (let i = 0; i < numbers.length; i++) {
+                    const ball = document.createElement('div')
+                    ball.classList.add('ball')
+                    ball.innerText = numbers[i]
+                    container.appendChild(ball)
+                    if (numbers[i] < 11){ball.style.backgroundColor = 'yellow'}
+                    else if (numbers[i] < 21){ball.style.backgroundColor = 'blue'}
+                    else if (numbers[i] < 31){ball.style.backgroundColor = 'red'}
+                    else if (numbers[i] < 41){ball.style.backgroundColor = 'grey'}
+                    else {ball.style.backgroundColor = 'green'}
+                }
+            // 페이지에 컨테이너 추가
+            const box = document.querySelector('#box')
+            box.appendChild(container)
+            }
+            // 한번에 5번 나오도록 수정
+        })
+        // 새로고침 버튼 추가
+        const n_button = document.querySelector('#new_btn')
+        n_button.addEventListener('click', function(){
+            window.location.reload()
+
+        })
+
+    </script>
+</body>
+</html>
